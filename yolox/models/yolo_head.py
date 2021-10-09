@@ -161,6 +161,7 @@ class YOLOXHead(nn.Module):
 
             reg_feat = reg_conv(reg_x)
             reg_output = self.reg_preds[k](reg_feat)
+
             obj_output = self.obj_preds[k](reg_feat)
 
             if self.training:

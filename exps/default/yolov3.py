@@ -33,10 +33,10 @@ class Exp(MyExp):
         return self.model
 
     def get_data_loader(self, batch_size, is_distributed, no_aug=False):
-        from data.datasets.cocodataset import COCODataset
+        from data.datasets.coco import COCODataset
         from data.datasets.mosaicdetection import MosaicDetection
-        from data.datasets.data_augment import TrainTransform
-        from data.datasets.dataloading import YoloBatchSampler, DataLoader, InfiniteSampler
+        from data.data_augment import TrainTransform
+        from data.dataloading import YoloBatchSampler, DataLoader, InfiniteSampler
         import torch.distributed as dist
 
         dataset = COCODataset(
