@@ -17,7 +17,7 @@ class Exp(BaseExp):
         super().__init__()
 
         # ---------------- model config ---------------- #
-        self.num_classes = 80
+        self.num_classes = 2 #80
         self.depth = 1.00
         self.width = 1.00
 
@@ -81,6 +81,7 @@ class Exp(BaseExp):
     def get_data_loader(self, batch_size, is_distributed, no_aug=False):
         from yolox.data import (
             COCODataset,
+            TablebankDataset,
             DataLoader,
             InfiniteSampler,
             MosaicDetection,
@@ -88,7 +89,15 @@ class Exp(BaseExp):
             YoloBatchSampler
         )
 
-        dataset = COCODataset(
+        dataset = TablebankDataset(
+            imgs_path=,
+            anno_path=self.train_ann,
+            resize_size=self.input_size,
+            is_train=True,
+            transform=None
+        )
+
+        _dataset_ = COCODataset(
             data_dir=None,
             json_file=self.train_ann,
             img_size=self.input_size,
