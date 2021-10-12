@@ -90,7 +90,7 @@ class Exp(BaseExp):
         )
 
         dataset = TablebankDataset(
-            imgs_path=,
+            imgs_path=None,
             anno_path=self.train_ann,
             resize_size=self.input_size,
             is_train=True,
