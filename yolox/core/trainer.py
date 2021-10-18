@@ -149,7 +149,7 @@ class Trainer:
             is_distributed=self.is_distributed,
             no_aug=self.no_aug,
         )
-        logger.info("init prefetcher, this might take one minute or less...")
+        logger.info("init prefetcher, this might take one minute or less..., but not use now")
         self.prefetcher = DataPrefetcher(self.train_loader)
         # max_iter means iters per epoch
         self.max_iter = len(self.train_loader)
@@ -172,9 +172,9 @@ class Trainer:
         self.model = model
         self.model.train()
 
-        self.evaluator = self.exp.get_evaluator(
-            batch_size=self.args.batch_size, is_distributed=self.is_distributed
-        )
+        # self.evaluator = self.exp.get_evaluator(
+        #     batch_size=self.args.batch_size, is_distributed=self.is_distributed
+        # )
         # Tensorboard logger
         if self.rank == 0:
             self.tblogger = SummaryWriter(self.file_name)

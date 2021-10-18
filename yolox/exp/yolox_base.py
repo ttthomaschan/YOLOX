@@ -17,13 +17,13 @@ class Exp(BaseExp):
         super().__init__()
 
         # ---------------- model config ---------------- #
-        self.num_classes = 80 #80
+        self.num_classes = 80
         self.depth = 1.00
         self.width = 1.00
 
         # ---------------- dataloader config ---------------- #
         # set worker to 4 for shorter dataloader init time
-        self.data_num_workers = 4
+        self.data_num_workers = 2
         self.input_size = (640, 640)
         self.random_size = (14, 26)
         self.train_ann = "instances_train2017.json"
@@ -81,21 +81,12 @@ class Exp(BaseExp):
     def get_data_loader(self, batch_size, is_distributed, no_aug=False):
         from yolox.data import (
             COCODataset,
-            #TablebankDataset,
             DataLoader,
             InfiniteSampler,
             MosaicDetection,
             TrainTransform,
             YoloBatchSampler
         )
-
-        # _dataset_ = TablebankDataset(
-        #     imgs_path=None,
-        #     anno_path=self.train_ann,
-        #     resize_size=self.input_size,
-        #     is_train=True,
-        #     transform=None
-        # )
 
         dataset = COCODataset(
             data_dir=None,

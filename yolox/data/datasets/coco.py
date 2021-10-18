@@ -133,3 +133,10 @@ class COCODataset(Dataset):
         if self.preproc is not None:
             img, target = self.preproc(img, target, self.input_dim)
         return img, target, img_info, img_id
+
+
+if __name__ == "__main__":
+    dataset = COCODataset(data_dir="/home/elimen/Data/YOLOX/datasets/COCO")
+    img, target, img_info, img_id = dataset[0]
+    print(target, "\n", img_info, "\n", img.shape,  "\n",  img.dtype)
+    print("Done.")
