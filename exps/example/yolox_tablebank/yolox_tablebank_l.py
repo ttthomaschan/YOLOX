@@ -39,11 +39,14 @@ class Exp(MyExp):
         # )
 
         dataset = TablebankDataset(
-            imgs_path=os.path.join(get_yolox_datadir(), "Tablebank/Detection/images"),
-            anno_path=os.path.join(get_yolox_datadir(), "Tablebank/Detection/annotations/tablebank_word_val.json"),
-            resize_size=self.input_size,
-            is_train=True,
-            transform=None
+            data_dir=None,
+            json_file="tablebank_word_train.json",
+            img_size=self.input_size,
+            preproc=TrainTransform(
+                rgb_means=(0.485, 0.456, 0.406),
+                std=(0.229, 0.224, 0.225),
+                max_labels=50,
+            ),
         )
 
         dataset = MosaicDetection(
