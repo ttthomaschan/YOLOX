@@ -103,18 +103,9 @@ def cos_lr(lr, total_iters, iters):
 def warm_cos_lr(lr, total_iters, warmup_total_iters, warmup_lr_start, iters):
     """Cosine learning rate with warm up."""
     if iters <= warmup_total_iters:
-        lr = (lr - warmup_lr_start) * iters / float(
-            warmup_total_iters
-        ) + warmup_lr_start
+        lr = (lr - warmup_lr_start) * iters / float(warmup_total_iters) + warmup_lr_start
     else:
-        lr *= 0.5 * (
-            1.0
-            + math.cos(
-                math.pi
-                * (iters - warmup_total_iters)
-                / (total_iters - warmup_total_iters)
-            )
-        )
+        lr *= 0.5 * (1.0 + math.cos(math.pi * (iters - warmup_total_iters) / (total_iters - warmup_total_iters)))
     return lr
 
 
@@ -131,20 +122,11 @@ def yolox_warm_cos_lr(
     min_lr = lr * min_lr_ratio
     if iters <= warmup_total_iters:
         # lr = (lr - warmup_lr_start) * iters / float(warmup_total_iters) + warmup_lr_start
-        lr = (lr - warmup_lr_start) * pow(
-            iters / float(warmup_total_iters), 2
-        ) + warmup_lr_start
+        lr = (lr - warmup_lr_start) * pow(iters / float(warmup_total_iters), 2) + warmup_lr_start
     elif iters >= total_iters - no_aug_iter:
         lr = min_lr
     else:
-        lr = min_lr + 0.5 * (lr - min_lr) * (
-            1.0
-            + math.cos(
-                math.pi
-                * (iters - warmup_total_iters)
-                / (total_iters - warmup_total_iters - no_aug_iter)
-            )
-        )
+        lr = min_lr + 0.5 * (lr - min_lr) * (1.0 + math.cos(math.pi * (iters - warmup_total_iters) / (total_iters - warmup_total_iters - no_aug_iter)))
     return lr
 
 

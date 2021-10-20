@@ -57,44 +57,35 @@ class TablebankDataset(Dataset):
         self.std = [0.28863828, 0.27408164, 0.27809835]
         print("call TableBank_dataset.__init__().")
 
-    def pull_item(self, index):
-
+    def _prepare_annotations(self, index):
         img_id = self.img_dict[index]['id']
-        img_file = self.img_dict[index]['file_name']
-
         anno_index_list = self.imgid2annoidx[str(img_id)]
-        img = cv2.imread(os.path.join(os.path.join(self.data_dir, "images"), img_file))
         boxes = []
         classes = []
         for i in range(len(anno_index_list)):
             boxes.append(self.anno_dict[anno_index_list[i]]['bbox'])
-            classes.append(self.anno_dict[anno_index_list[i]]['category_id'])
+            classes.append([self.anno_dict[anno_index_list[i]]['category_id']])
         # list --> ndarray
         boxes = np.array(boxes, dtype = np.float32)
         classes = np.array(classes, dtype=np.float32)
         # xywh --> xyxy
         boxes[..., 2:] = boxes[..., 2:] + boxes[..., :2]
-
-        # if self.train:
-        #     if random.random() < 0.5 :
-        #         img, boxes = flip(img, boxes)
-        #     if self.transform is not None:
-        #         img, boxes = self.transform(img, boxes)
-        # img = np.array(img)
-
         # img, boxes = self.preprocess_img_boxes(img, boxes, self.img_size)
-        # img = draw_bboxes(img,boxes)
+        res = np.concatenate((boxes, classes), axis=1)
 
+        return res
 
-        # img = transforms.ToTensor()(img)
-        # # img = transforms.Normalize(self.mean, self.std,inplace=True)(img)
-        # boxes = torch.from_numpy(boxes)
-        # classes = torch.LongTensor(classes)
+    def load_anno(self, index):
+        return self._prepare_annotations(index)
 
-        res = np.hstack(boxes, classes)
-        img_info = img.shape
+    def pull_item(self, index):
+        img_file = self.img_dict[index]['file_name']
+        img = cv2.imread(os.path.join(os.path.join(self.data_dir, "images"), img_file))
+        res = self._prepare_annotations(index)
+        img_info = (img.shape[0], img.shape[1])
+        img_id = self.img_dict[index]['id']
 
-        return img, res, img_info, img_id
+        return img, res, img_info, np.array([img_id])
 
     @Dataset.resize_getitem
     def __getitem__(self, index):

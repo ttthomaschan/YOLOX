@@ -22,6 +22,7 @@ class DataPrefetcher:
         self.stream = torch.cuda.Stream()
         self.loader = iter(loader)
         self.input_cuda = self._input_cuda_for_image
+
         self.record_stream = DataPrefetcher._record_stream_for_image
         self.preload()
 
