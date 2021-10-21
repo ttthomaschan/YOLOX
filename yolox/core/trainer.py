@@ -172,9 +172,7 @@ class Trainer:
         self.model = model
         self.model.train()
 
-        # self.evaluator = self.exp.get_evaluator(
-        #     batch_size=self.args.batch_size, is_distributed=self.is_distributed
-        # )
+        self.evaluator = self.exp.get_evaluator(batch_size=self.args.batch_size, is_distributed=self.is_distributed)
         # Tensorboard logger
         if self.rank == 0:
             self.tblogger = SummaryWriter(self.file_name)
@@ -303,9 +301,7 @@ class Trainer:
 
     def evaluate_and_save_model(self):
         evalmodel = self.ema_model.ema if self.use_model_ema else self.model
-        ap50_95, ap50, summary = self.exp.eval(
-            evalmodel, self.evaluator, self.is_distributed
-        )
+        ap50_95, ap50, summary = self.exp.eval(evalmodel, self.evaluator, self.is_distributed)    ## voc_evaluator
         self.model.train()
         if self.rank == 0:
             self.tblogger.add_scalar("val/COCOAP50", ap50, self.epoch + 1)

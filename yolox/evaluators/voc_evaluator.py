@@ -92,9 +92,7 @@ class VOCEvaluator:
             model(x)
             model = model_trt
 
-        for cur_iter, (imgs, _, info_imgs, ids) in enumerate(
-            progress_bar(self.dataloader)
-        ):
+        for cur_iter, (imgs, _, info_imgs, ids) in enumerate(progress_bar(self.dataloader)):
             with torch.no_grad():
                 imgs = imgs.type(tensor_type)
 
@@ -111,9 +109,9 @@ class VOCEvaluator:
                     infer_end = time_synchronized()
                     inference_time += infer_end - start
 
-                outputs = postprocess(
-                    outputs, self.num_classes, self.confthre, self.nmsthre
-                )
+                " BBoxes postprocessing. [from utils.boxes import postprocess] "
+                outputs = postprocess(outputs, self.num_classes, self.confthre, self.nmsthre)
+
                 if is_time_record:
                     nms_end = time_synchronized()
                     nms_time += nms_end - infer_end
