@@ -51,7 +51,7 @@ class Exp(BaseExp):
         self.weight_decay = 5e-4
         self.momentum = 0.9
         self.print_interval = 10 # -> 10 iterations
-        self.eval_interval = 10 # -> 10 epoches
+        self.eval_interval = 1 # -> 10 epoches
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
         # -----------------  testing config ------------------ #

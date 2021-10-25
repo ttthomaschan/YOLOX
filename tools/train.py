@@ -22,8 +22,8 @@ def make_parser():
     # distributed
     parser.add_argument("--dist-backend", default="nccl", type=str, help="distributed backend")
     parser.add_argument("--dist-url", default=None, type=str, help="url used to set up distributed training")
-    parser.add_argument("-b", "--batch-size", type=int, default=32, help="batch size")
-    parser.add_argument("-d", "--devices", default=2, type=int, help="device for training")
+    parser.add_argument("-b", "--batch-size", type=int, default=48, help="batch size")
+    parser.add_argument("-d", "--devices", default=3, type=int, help="device for training")
     parser.add_argument("--local_rank", default=0, type=int, help="local rank for dist training")
     parser.add_argument("-f", "--exp_file", default="../exps/example/yolox_tablebank/yolox_tablebank_l.py", type=str, help="plz input your expriment description file")
     # parser.add_argument("-f", "--exp_file", default="../exps/default/yolox_l.py", type=str, help="plz input your expriment description file")
@@ -46,7 +46,7 @@ def main(exp, args):
         cudnn.deterministic = True
         warnings.warn(
             "You have chosen to seed training. This will turn on the CUDNN deterministic setting, "
-            "which can slow down your training considerably! You may see unexpected behavior "
+            "which can slow down your trget_eval_loaderaining considerably! You may see unexpected behavior "
             "when restarting from checkpoints."
         )
 
