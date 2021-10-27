@@ -33,8 +33,8 @@ def make_parser():
     parser.add_argument("--save_result", default=True, action="store_true", help="whether to save the inference result of image/video")
 
     # exp file
-    parser.add_argument("-f", "--exp_file", default="../exps/example/yolox_tablebank/yolox_tablebank_l.py", type=str, help="pls input your expriment description file")
-    parser.add_argument("-c", "--ckpt", default="../YOLOX_outputs/yolox_tablebank_l/latest_ckpt.pth.tar", type=str, help="ckpt for eval")
+    parser.add_argument("-f", "--exp_file", default="./exps/example/yolox_tablebank/yolox_tablebank_l.py", type=str, help="pls input your expriment description file")
+    parser.add_argument("-c", "--ckpt", default="./YOLOX_outputs/yolox_tablebank_l/latest_ckpt.pth.tar", type=str, help="ckpt for eval")
     parser.add_argument("--device", default="gpu", type=str, help="device to run our model, can either be cpu or gpu",)
     parser.add_argument("--conf", default=0.25, type=float, help="test conf")
     parser.add_argument("--nms", default=0.45, type=float, help="test nms threshold")

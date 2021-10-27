@@ -45,7 +45,7 @@ class Exp(MyExp):
             preproc=TrainTransform(
                 rgb_means=(0.485, 0.456, 0.406),
                 std=(0.229, 0.224, 0.225),
-                max_labels=50,
+                max_labels=20,
             ),
         )
 
@@ -56,8 +56,7 @@ class Exp(MyExp):
             preproc=TrainTransform(
                 rgb_means=(0.485, 0.456, 0.406),
                 std=(0.229, 0.224, 0.225),
-                max_labels=120,
-            ),
+                max_labels=20),
             degrees=self.degrees,
             translate=self.translate,
             scale=self.scale,
@@ -90,7 +89,7 @@ class Exp(MyExp):
         return train_loader
 
     def get_eval_loader(self, batch_size, is_distributed, testdev=False):
-        from yolox.data import TablebankDataset, VOCDetection, ValTransform
+        from yolox.data import TablebankDataset, VOCDetection, ValTransform, TrainTransform, DataLoader
 
         # _valdataset_ = VOCDetection(
         #     data_dir=os.path.join(get_yolox_datadir(), "VOCdevkit"),
@@ -106,9 +105,10 @@ class Exp(MyExp):
             data_dir=None,
             json_file="tablebank_word_val.json",
             img_size=self.input_size,
-            preproc=ValTransform(
+            preproc=TrainTransform(
                 rgb_means=(0.485, 0.456, 0.406),
                 std=(0.229, 0.224, 0.225),
+                max_labels=20
             )
         )
 

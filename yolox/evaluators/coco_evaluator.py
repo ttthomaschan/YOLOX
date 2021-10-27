@@ -31,7 +31,13 @@ class COCOEvaluator:
     """
 
     def __init__(
-        self, dataloader, img_size, confthre, nmsthre, num_classes, testdev=False
+        self,
+        dataloader,
+        img_size,
+        confthre,
+        nmsthre,
+        num_classes,
+        testdev=False
     ):
         """
         Args:
