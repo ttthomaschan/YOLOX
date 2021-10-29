@@ -75,6 +75,7 @@ class MosaicDetection(Dataset):
 
     @Dataset.resize_getitem
     def __getitem__(self, idx):
+        # print("###### call mosaic __getitem__ ######")
         if self.enable_mosaic:
             mosaic_labels = []
             input_dim = self._dataset.input_dim

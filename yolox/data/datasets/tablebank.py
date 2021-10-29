@@ -70,7 +70,6 @@ class TablebankDataset(Dataset):
         classes = np.array(classes, dtype=np.float32)
         # xywh --> xyxy
         boxes[..., 2:] = boxes[..., 2:] + boxes[..., :2]
-        # img, boxes = self.preprocess_img_boxes(img, boxes, self.img_size)
         res = np.concatenate((boxes, classes), axis=1)
 
         return res
@@ -79,6 +78,7 @@ class TablebankDataset(Dataset):
         return self._prepare_annotations(index)
 
     def pull_item(self, index):
+        # print("****** call pull_item func ******")
         img_file = self.img_dict[index]['file_name']
         img = cv2.imread(os.path.join(os.path.join(self.data_dir, "images"), img_file))
         res = self._prepare_annotations(index)
@@ -90,9 +90,11 @@ class TablebankDataset(Dataset):
     @Dataset.resize_getitem
     def __getitem__(self, index):
         img, res, img_info, img_id = self.pull_item(index)
+        flag = self.preproc is not None
+        # print("****** call Tablebank __getitem__, preproc is {} ******".format(flag))
         if self.preproc is not None:
             img, target = self.preproc(img, res, self.input_dim)
-        return img, res, img_info, img_id
+        return img, target, img_info, img_id
 
     def __len__(self):
         return len(self.img_dict)
